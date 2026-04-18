@@ -1,0 +1,15 @@
+NARRATOR: Listening Quiz. You will hear a short conversation between two colleagues. Then answer the question.
+A: Hey, you look a bit worn out. Rough day?
+B: Yeah, I’ve been dealing with my landlord all week. He keeps cancelling our meeting about the lease renewal.
+A: That’s incredibly frustrating. How many times has he cancelled?
+B: Three times now. At this point, I’m seriously thinking about just looking for a new place.
+A: Honestly, that might be worth it. A colleague of mine just found a really nice two-bedroom for well under the going rate.
+B: Really? I thought the rental market was still ridiculously overpriced.
+A: Prices have actually come down in a few neighbourhoods. It’s worth checking some listings this weekend.
+B: Maybe you’re right. I’ll have a look. I can’t keep waiting around for my landlord to get his act together.
+QUESTION: Question. What is the woman’s main problem?
+CHOICE: A. She cannot afford her current rent.
+CHOICE: B. Her landlord keeps postponing their scheduled meeting.
+CHOICE: C. She has already moved into a new apartment.
+CHOICE: D. She cannot find any affordable listings online.
+ANSWER: The correct answer is B. Her landlord keeps postponing their scheduled meeting.
