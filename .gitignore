@@ -6,3 +6,5 @@ __pycache__/
 audio_parts/
 *.mp3
 
+logs/
+output/

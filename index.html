@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Daily English Listening Quiz</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-size: 15px;
+    line-height: 1.7;
+    color: #1a1a1a;
+    background: #f7f6f3;
+    min-height: 100vh;
+  }
+
+  .wrap {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 2rem 1rem 4rem;
+  }
+
+  /* ヘッダー */
+  .site-header {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+  .site-header h1 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: #1a1a1a;
+  }
+  .site-header p {
+    font-size: 0.82rem;
+    color: #888;
+    margin-top: 2px;
+  }
+
+  /* カード */
+  .card {
+    background: #fff;
+    border-radius: 14px;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    border: 1px solid #e8e6e1;
+  }
+
+  /* 日付バッジとパラメータ */
+  .quiz-meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+  }
+  .date-badge {
+    font-size: 0.8rem;
+    font-weight: 600;
+    background: #1a1a1a;
+    color: #fff;
+    border-radius: 6px;
+    padding: 3px 10px;
+  }
+  .tag {
+    font-size: 0.75rem;
+    background: #f0ede8;
+    color: #555;
+    border-radius: 20px;
+    padding: 2px 10px;
+  }
+
+  /* オーディオプレーヤー */
+  .player-wrap {
+    margin-bottom: 1.2rem;
+  }
+  audio {
+    width: 100%;
+    border-radius: 8px;
+  }
+
+  /* スクリプト */
+  .script-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.8rem;
+  }
+  .script-section h3 {
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #999;
+    margin-bottom: 0;
+  }
+  .script-toggle-btn {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #555;
+    background: #f0ede8;
+    border: none;
+    border-radius: 20px;
+    padding: 3px 12px;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .script-toggle-btn:hover { background: #e0ddd8; }
+  .script-lines { display: none; flex-direction: column; gap: 6px; }
+  .script-lines.visible { display: flex; }
+
+  .line { display: flex; gap: 10px; align-items: flex-start; }
+  .line-label {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    min-width: 68px;
+    padding: 3px 8px;
+    border-radius: 5px;
+    text-align: center;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .label-NARRATOR { background: #e8f0fe; color: #1a56c4; }
+  .label-A        { background: #fce8d5; color: #c45a1a; }
+  .label-B        { background: #e8f5e9; color: #2e7d32; }
+  .label-QUESTION { background: #f3e8ff; color: #6a1a9a; }
+  .label-CHOICE   { background: #f0ede8; color: #555; }
+
+  .line-text { font-size: 0.92rem; color: #1a1a1a; padding-top: 3px; }
+
+  /* 正解エリア */
+  .answer-section { margin-top: 1.2rem; }
+  .reveal-btn {
+    width: 100%;
+    padding: 10px;
+    background: #1a1a1a;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .reveal-btn:hover { background: #333; }
+  .answer-box {
+    display: none;
+    margin-top: 10px;
+    padding: 12px 16px;
+    background: #f0ede8;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #1a1a1a;
+  }
+  .answer-box.visible { display: block; }
+
+  /* アーカイブ */
+  .archive-section h2 {
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #999;
+    margin-bottom: 0.8rem;
+  }
+  .archive-list { display: flex; flex-direction: column; gap: 6px; }
+  .archive-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    background: #fff;
+    border: 1px solid #e8e6e1;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: border-color 0.15s, background 0.15s;
+    text-align: left;
+    width: 100%;
+  }
+  .archive-item:hover { border-color: #aaa; background: #faf9f7; }
+  .archive-item.active { border-color: #1a1a1a; background: #1a1a1a; }
+  .archive-item.active .arc-date,
+  .archive-item.active .arc-topic { color: #fff; }
+  .archive-item.active .arc-tags .tag { background: #333; color: #ccc; }
+  .arc-date  { font-size: 0.8rem; font-weight: 600; color: #1a1a1a; min-width: 90px; }
+  .arc-topic { font-size: 0.82rem; color: #555; flex: 1; }
+  .arc-tags  { display: flex; gap: 4px; flex-wrap: wrap; }
+
+  /* ローディング */
+  .loading { text-align: center; color: #aaa; font-size: 0.9rem; padding: 2rem 0; }
+  .error   { text-align: center; color: #c0392b; font-size: 0.9rem; padding: 1rem 0; }
+
+  /* 学習タブ */
+  .study-section { margin-top: 1.4rem; border-top: 1px solid #e8e6e1; padding-top: 1.2rem; }
+  .tab-bar { display: flex; gap: 6px; margin-bottom: 1rem; flex-wrap: wrap; }
+  .tab-btn {
+    font-size: 0.78rem;
+    font-weight: 600;
+    padding: 5px 14px;
+    border-radius: 20px;
+    border: 1px solid #e8e6e1;
+    background: #fff;
+    color: #888;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .tab-btn:hover { border-color: #aaa; color: #444; }
+  .tab-btn.active { background: #1a1a1a; border-color: #1a1a1a; color: #fff; }
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  /* 解説 */
+  .explanation-summary {
+    font-size: 0.88rem; color: #444; line-height: 1.7;
+    background: #f7f6f3; border-radius: 8px; padding: 12px 14px;
+    margin-bottom: 1rem;
+  }
+  .explanation-block { margin-bottom: 1rem; }
+  .explanation-block h4 {
+    font-size: 0.75rem; font-weight: 600; letter-spacing: 0.06em;
+    text-transform: uppercase; color: #999; margin-bottom: 6px;
+  }
+  .explanation-block p { font-size: 0.88rem; color: #333; line-height: 1.7; }
+  .choice-row {
+    display: flex; gap: 8px; align-items: flex-start;
+    padding: 8px 0; border-bottom: 1px solid #f0ede8;
+    font-size: 0.86rem;
+  }
+  .choice-row:last-child { border-bottom: none; }
+  .choice-badge {
+    font-size: 0.72rem; font-weight: 700; min-width: 22px; height: 22px;
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; margin-top: 1px;
+  }
+  .choice-badge.correct { background: #e8f5e9; color: #2e7d32; }
+  .choice-badge.wrong   { background: #f0ede8; color: #888; }
+  .choice-reason { color: #444; line-height: 1.6; }
+
+  /* 単語 */
+  .vocab-list { display: flex; flex-direction: column; gap: 8px; }
+  .vocab-item {
+    padding: 10px 14px; background: #f7f6f3;
+    border-radius: 8px; border-left: 3px solid #1a1a1a;
+  }
+  .vocab-word { font-size: 0.95rem; font-weight: 600; color: #1a1a1a; }
+  .vocab-reading { font-size: 0.75rem; color: #888; margin-left: 6px; }
+  .vocab-meaning { font-size: 0.82rem; color: #555; margin-top: 2px; }
+  .vocab-example { font-size: 0.82rem; color: #888; margin-top: 3px; font-style: italic; }
+
+  /* ディクテーション */
+  .dictation-list { display: flex; flex-direction: column; gap: 10px; }
+  .dictation-item { padding: 10px 14px; background: #f7f6f3; border-radius: 8px; }
+  .dictation-blanked {
+    font-size: 0.9rem; color: #1a1a1a; line-height: 1.7; margin-bottom: 6px;
+  }
+  .blank { display: inline-block; min-width: 60px; border-bottom: 2px solid #1a1a1a;
+           background: transparent; color: transparent; cursor: pointer; }
+  .blank.revealed { color: #1a56c4; background: #e8f0fe; border-radius: 3px;
+                    padding: 0 4px; border-bottom: none; }
+  .dictation-hint {
+    font-size: 0.75rem; color: #aaa; margin-top: 2px;
+  }
+  .reveal-all-btn {
+    margin-top: 10px; font-size: 0.78rem; font-weight: 600;
+    padding: 5px 14px; border-radius: 20px; border: 1px solid #e8e6e1;
+    background: #fff; color: #555; cursor: pointer;
+  }
+  .reveal-all-btn:hover { background: #f0ede8; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="site-header">
+    <h1>Daily English Listening Quiz</h1>
+    <p>毎日自動生成・更新</p>
+  </header>
+
+  <div id="quiz-card" class="card">
+    <div class="loading" id="loading-main">読み込み中...</div>
+    <div id="quiz-content" style="display:none">
+      <div class="quiz-meta" id="quiz-meta"></div>
+      <div class="player-wrap">
+        <audio id="audio-player" controls preload="none"></audio>
+      </div>
+      <div class="script-section">
+        <div class="script-header">
+          <h3>Script</h3>
+          <button class="script-toggle-btn" onclick="toggleScript()">スクリプトを見る</button>
+        </div>
+        <div class="script-lines" id="script-lines"></div>
+      </div>
+      <div class="answer-section">
+        <button class="reveal-btn" onclick="toggleAnswer()">正解を見る</button>
+        <div class="answer-box" id="answer-box"></div>
+      </div>
+
+      <div class="study-section" id="study-section" style="display:none">
+        <div class="tab-bar">
+          <button class="tab-btn active" onclick="switchTab('explanation')">解説</button>
+          <button class="tab-btn" onclick="switchTab('vocabulary')">単語・フレーズ</button>
+          <button class="tab-btn" onclick="switchTab('dictation')">ディクテーション</button>
+        </div>
+        <div class="tab-panel active" id="tab-explanation"></div>
+        <div class="tab-panel" id="tab-vocabulary"></div>
+        <div class="tab-panel" id="tab-dictation"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card archive-section">
+    <h2>Archive</h2>
+    <div class="archive-list" id="archive-list">
+      <div class="loading">読み込み中...</div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+const BASE = "https://objectstorage.ap-osaka-1.oraclecloud.com/n/axtomwswxwua/b/eng-listening/o";
+const INDEX_URL = `${BASE}/index.json`;
+
+let currentDate = null;
+
+async function fetchJSON(url) {
+  const res = await fetch(url + "?_=" + Date.now());
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
+}
+
+function labelClass(label) {
+  const m = { NARRATOR:"NARRATOR", A:"A", B:"B", QUESTION:"QUESTION", CHOICE:"CHOICE" };
+  return "label-" + (m[label] || "CHOICE");
+}
+
+function labelText(label) {
+  const m = { NARRATOR:"Narrator", A:"Speaker A", B:"Speaker B", QUESTION:"Question", CHOICE:"Choice" };
+  return m[label] || label;
+}
+
+function renderQuiz(data) {
+  currentDate = data.date;
+
+  const meta = document.getElementById("quiz-meta");
+  meta.innerHTML = `
+    <span class="date-badge">${data.date_display}</span>
+    <span class="tag">${data.params.difficulty}</span>
+    <span class="tag">${data.params.genre}</span>
+    <span class="tag">${data.params.relationship}</span>
+    <span class="tag">${data.params.topic}</span>
+  `;
+
+  document.getElementById("audio-player").src = data.mp3_url;
+
+  const sl = document.getElementById("script-lines");
+  sl.innerHTML = data.lines.map(l => `
+    <div class="line">
+      <span class="line-label ${labelClass(l.label)}">${labelText(l.label)}</span>
+      <span class="line-text">${l.text}</span>
+    </div>
+  `).join("");
+
+  document.getElementById("answer-box").textContent = data.answer;
+  document.getElementById("answer-box").classList.remove("visible");
+  document.getElementById("script-lines").classList.remove("visible");
+  document.querySelector(".script-toggle-btn").textContent = "スクリプトを見る";
+  document.getElementById("study-section").style.display = "none";
+  switchTab("explanation");
+
+  if (data.study && Object.keys(data.study).length > 0) {
+    renderStudy(data.study, data.answer);
+  }
+
+  document.getElementById("loading-main").style.display = "none";
+  document.getElementById("quiz-content").style.display = "block";
+}
+
+function switchTab(name) {
+  document.querySelectorAll(".tab-btn").forEach((b, i) => {
+    const names = ["explanation", "vocabulary", "dictation"];
+    b.classList.toggle("active", names[i] === name);
+  });
+  document.querySelectorAll(".tab-panel").forEach(p => p.classList.remove("active"));
+  document.getElementById("tab-" + name).classList.add("active");
+}
+
+function renderStudy(study, answer) {
+  if (!study || Object.keys(study).length === 0) return;
+  document.getElementById("study-section").style.display = "block";
+
+  // 正解の選択肢ラベルを取得（"The correct answer is B. ..." → "B"）
+  const correctLetter = answer.match(/is\s+([A-D])/i)?.[1] || "";
+
+  // 解説タブ
+  const exp = study.explanation || {};
+  const wrongRows = (exp.wrong_answers || []).map(w => {
+    const isCorrect = w.choice === correctLetter;
+    return `<div class="choice-row">
+      <span class="choice-badge ${isCorrect ? "correct" : "wrong"}">${w.choice}</span>
+      <span class="choice-reason">${isCorrect ? "✓ 正解" : w.reason}</span>
+    </div>`;
+  }).join("");
+  document.getElementById("tab-explanation").innerHTML = `
+    <div class="explanation-summary">${exp.summary || ""}</div>
+    <div class="explanation-block">
+      <h4>正解の理由</h4>
+      <p>${exp.correct_answer || ""}</p>
+    </div>
+    <div class="explanation-block">
+      <h4>各選択肢の解説</h4>
+      ${wrongRows}
+    </div>
+    <div class="explanation-block">
+      <h4>リスニングのポイント</h4>
+      <p>${exp.listening_tips || ""}</p>
+    </div>
+  `;
+
+  // 単語タブ
+  const vocabItems = (study.vocabulary || []).map(v => `
+    <div class="vocab-item">
+      <div><span class="vocab-word">${v.word}</span><span class="vocab-reading">${v.reading || ""}</span></div>
+      <div class="vocab-meaning">${v.meaning}</div>
+      <div class="vocab-example">${v.example || ""}</div>
+    </div>
+  `).join("");
+  document.getElementById("tab-vocabulary").innerHTML =
+    `<div class="vocab-list">${vocabItems}</div>`;
+
+  // ディクテーションタブ
+  let dictHtml = '<div class="dictation-list">';
+  (study.dictation || []).forEach((d, idx) => {
+    const blankedHtml = d.blanked.replace(/___/g, (_, pos) => {
+      return `<span class="blank" data-idx="${idx}" onclick="revealBlank(this)">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>`;
+    });
+    dictHtml += `
+      <div class="dictation-item" data-answers='${JSON.stringify(d.answers)}'>
+        <div class="dictation-blanked">${blankedHtml}</div>
+        <div class="dictation-hint">クリックで答えを表示</div>
+      </div>`;
+  });
+  dictHtml += '</div>';
+  dictHtml += '<button class="reveal-all-btn" onclick="revealAllBlanks()">すべて表示</button>';
+  document.getElementById("tab-dictation").innerHTML = dictHtml;
+}
+
+function revealBlank(el) {
+  const item = el.closest(".dictation-item");
+  const answers = JSON.parse(item.dataset.answers);
+  const blanks = item.querySelectorAll(".blank");
+  blanks.forEach((b, i) => {
+    if (b === el && answers[i] !== undefined) {
+      b.textContent = answers[i];
+      b.classList.add("revealed");
+    }
+  });
+}
+
+function revealAllBlanks() {
+  document.querySelectorAll(".dictation-item").forEach(item => {
+    const answers = JSON.parse(item.dataset.answers);
+    item.querySelectorAll(".blank").forEach((b, i) => {
+      if (answers[i] !== undefined) {
+        b.textContent = answers[i];
+        b.classList.add("revealed");
+      }
+    });
+  });
+}
+
+function toggleScript() {
+  const lines = document.getElementById("script-lines");
+  const btn = document.querySelector(".script-toggle-btn");
+  if (lines.classList.contains("visible")) {
+    lines.classList.remove("visible");
+    btn.textContent = "スクリプトを見る";
+  } else {
+    lines.classList.add("visible");
+    btn.textContent = "スクリプトを隠す";
+  }
+}
+
+function toggleAnswer() {
+  const box = document.getElementById("answer-box");
+  const btn = document.querySelector(".reveal-btn");
+  if (box.classList.contains("visible")) {
+    box.classList.remove("visible");
+    btn.textContent = "正解を見る";
+  } else {
+    box.classList.add("visible");
+    btn.textContent = "正解を隠す";
+  }
+}
+
+async function loadQuizByJsonUrl(jsonUrl, dateStr) {
+  document.getElementById("loading-main").style.display = "block";
+  document.getElementById("quiz-content").style.display = "none";
+  document.querySelectorAll(".archive-item").forEach(el => {
+    el.classList.toggle("active", el.dataset.date === dateStr);
+  });
+  try {
+    const data = await fetchJSON(jsonUrl);
+    renderQuiz(data);
+  } catch (e) {
+    document.getElementById("loading-main").textContent = "読み込みに失敗しました";
+  }
+}
+
+async function init() {
+  let index;
+  try {
+    index = await fetchJSON(INDEX_URL);
+  } catch (e) {
+    document.getElementById("loading-main").textContent = "データの取得に失敗しました";
+    document.getElementById("archive-list").innerHTML = '<div class="error">取得失敗</div>';
+    return;
+  }
+
+  // アーカイブ一覧を描画
+  const al = document.getElementById("archive-list");
+  if (index.length === 0) {
+    al.innerHTML = '<div class="loading">まだ問題がありません</div>';
+  } else {
+    al.innerHTML = index.map(e => `
+      <button class="archive-item" data-date="${e.date}" data-json="${e.json_url}"
+              onclick="loadQuizByJsonUrl(this.dataset.json, this.dataset.date)">
+        <span class="arc-date">${e.date_display}</span>
+        <span class="arc-topic">${e.params.topic}</span>
+        <span class="arc-tags">
+          <span class="tag">${e.params.difficulty}</span>
+          <span class="tag">${e.params.genre}</span>
+        </span>
+      </button>
+    `).join("");
+  }
+
+  // 最新問題を表示
+  if (index.length > 0) {
+    await loadQuizByJsonUrl(index[0].json_url, index[0].date);
+  }
+}
+
+init();
+</script>
+</body>
+</html>
