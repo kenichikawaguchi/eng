@@ -159,8 +159,14 @@ def parse_script(script_text: str) -> dict:
         raw = raw.strip()
         if not raw or ":" not in raw:
             continue
+        # ``` を含む行はスキップ
+        if raw.startswith("```"):
+            continue
         label, text = raw.split(":", 1)
         label, text = label.strip().upper(), text.strip()
+        text = text.replace("```", "").strip()
+        if not text:
+            continue
         if label == "ANSWER":
             answer = text
         elif label == "QUESTION":

@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
@@ -7,277 +8,278 @@
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-  body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    font-size: 15px;
-    line-height: 1.7;
-    color: #1a1a1a;
-    background: #f7f6f3;
-    min-height: 100vh;
-  }
+body {
+font-family: -apple-system, BlinkMacSystemFont, “Segoe UI”, sans-serif;
+font-size: 15px;
+line-height: 1.7;
+color: #1a1a1a;
+background: #f7f6f3;
+min-height: 100vh;
+}
 
-  .wrap {
-    max-width: 720px;
-    margin: 0 auto;
-    padding: 2rem 1rem 4rem;
-  }
+.wrap {
+max-width: 720px;
+margin: 0 auto;
+padding: 2rem 1rem 4rem;
+}
 
-  /* ヘッダー */
-  .site-header {
-    text-align: center;
-    margin-bottom: 2rem;
-  }
-  .site-header h1 {
-    font-size: 1.3rem;
-    font-weight: 600;
-    letter-spacing: 0.04em;
-    color: #1a1a1a;
-  }
-  .site-header p {
-    font-size: 0.82rem;
-    color: #888;
-    margin-top: 2px;
-  }
+/* ヘッダー */
+.site-header {
+text-align: center;
+margin-bottom: 2rem;
+}
+.site-header h1 {
+font-size: 1.3rem;
+font-weight: 600;
+letter-spacing: 0.04em;
+color: #1a1a1a;
+}
+.site-header p {
+font-size: 0.82rem;
+color: #888;
+margin-top: 2px;
+}
 
-  /* カード */
-  .card {
-    background: #fff;
-    border-radius: 14px;
-    padding: 1.5rem;
-    margin-bottom: 1rem;
-    border: 1px solid #e8e6e1;
-  }
+/* カード */
+.card {
+background: #fff;
+border-radius: 14px;
+padding: 1.5rem;
+margin-bottom: 1rem;
+border: 1px solid #e8e6e1;
+}
 
-  /* 日付バッジとパラメータ */
-  .quiz-meta {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    flex-wrap: wrap;
-    margin-bottom: 1rem;
-  }
-  .date-badge {
-    font-size: 0.8rem;
-    font-weight: 600;
-    background: #1a1a1a;
-    color: #fff;
-    border-radius: 6px;
-    padding: 3px 10px;
-  }
-  .tag {
-    font-size: 0.75rem;
-    background: #f0ede8;
-    color: #555;
-    border-radius: 20px;
-    padding: 2px 10px;
-  }
+/* 日付バッジとパラメータ */
+.quiz-meta {
+display: flex;
+align-items: center;
+gap: 10px;
+flex-wrap: wrap;
+margin-bottom: 1rem;
+}
+.date-badge {
+font-size: 0.8rem;
+font-weight: 600;
+background: #1a1a1a;
+color: #fff;
+border-radius: 6px;
+padding: 3px 10px;
+}
+.tag {
+font-size: 0.75rem;
+background: #f0ede8;
+color: #555;
+border-radius: 20px;
+padding: 2px 10px;
+}
 
-  /* オーディオプレーヤー */
-  .player-wrap {
-    margin-bottom: 1.2rem;
-  }
-  audio {
-    width: 100%;
-    border-radius: 8px;
-  }
+/* オーディオプレーヤー */
+.player-wrap {
+margin-bottom: 1.2rem;
+}
+audio {
+width: 100%;
+border-radius: 8px;
+}
 
-  /* スクリプト */
-  .script-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 0.8rem;
-  }
-  .script-section h3 {
-    font-size: 0.78rem;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: #999;
-    margin-bottom: 0;
-  }
-  .script-toggle-btn {
-    font-size: 0.75rem;
-    font-weight: 600;
-    color: #555;
-    background: #f0ede8;
-    border: none;
-    border-radius: 20px;
-    padding: 3px 12px;
-    cursor: pointer;
-    transition: background 0.15s;
-  }
-  .script-toggle-btn:hover { background: #e0ddd8; }
-  .script-lines { display: none; flex-direction: column; gap: 6px; }
-  .script-lines.visible { display: flex; }
+/* スクリプト */
+.script-header {
+display: flex;
+align-items: center;
+justify-content: space-between;
+margin-bottom: 0.8rem;
+}
+.script-section h3 {
+font-size: 0.78rem;
+font-weight: 600;
+letter-spacing: 0.08em;
+text-transform: uppercase;
+color: #999;
+margin-bottom: 0;
+}
+.script-toggle-btn {
+font-size: 0.75rem;
+font-weight: 600;
+color: #555;
+background: #f0ede8;
+border: none;
+border-radius: 20px;
+padding: 3px 12px;
+cursor: pointer;
+transition: background 0.15s;
+}
+.script-toggle-btn:hover { background: #e0ddd8; }
+.script-lines { display: none; flex-direction: column; gap: 6px; }
+.script-lines.visible { display: flex; }
 
-  .line { display: flex; gap: 10px; align-items: flex-start; }
-  .line-label {
-    font-size: 0.72rem;
-    font-weight: 700;
-    letter-spacing: 0.04em;
-    min-width: 68px;
-    padding: 3px 8px;
-    border-radius: 5px;
-    text-align: center;
-    flex-shrink: 0;
-    margin-top: 2px;
-  }
-  .label-NARRATOR { background: #e8f0fe; color: #1a56c4; }
-  .label-A        { background: #fce8d5; color: #c45a1a; }
-  .label-B        { background: #e8f5e9; color: #2e7d32; }
-  .label-QUESTION { background: #f3e8ff; color: #6a1a9a; }
-  .label-CHOICE   { background: #f0ede8; color: #555; }
+.line { display: flex; gap: 10px; align-items: flex-start; }
+.line-label {
+font-size: 0.72rem;
+font-weight: 700;
+letter-spacing: 0.04em;
+min-width: 68px;
+padding: 3px 8px;
+border-radius: 5px;
+text-align: center;
+flex-shrink: 0;
+margin-top: 2px;
+}
+.label-NARRATOR { background: #e8f0fe; color: #1a56c4; }
+.label-A        { background: #fce8d5; color: #c45a1a; }
+.label-B        { background: #e8f5e9; color: #2e7d32; }
+.label-QUESTION { background: #f3e8ff; color: #6a1a9a; }
+.label-CHOICE   { background: #f0ede8; color: #555; }
 
-  .line-text { font-size: 0.92rem; color: #1a1a1a; padding-top: 3px; }
+.line-text { font-size: 0.92rem; color: #1a1a1a; padding-top: 3px; }
 
-  /* 正解エリア */
-  .answer-section { margin-top: 1.2rem; }
-  .reveal-btn {
-    width: 100%;
-    padding: 10px;
-    background: #1a1a1a;
-    color: #fff;
-    border: none;
-    border-radius: 8px;
-    font-size: 0.88rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background 0.15s;
-  }
-  .reveal-btn:hover { background: #333; }
-  .answer-box {
-    display: none;
-    margin-top: 10px;
-    padding: 12px 16px;
-    background: #f0ede8;
-    border-radius: 8px;
-    font-size: 0.9rem;
-    font-weight: 600;
-    color: #1a1a1a;
-  }
-  .answer-box.visible { display: block; }
+/* 正解エリア */
+.answer-section { margin-top: 1.2rem; }
+.reveal-btn {
+width: 100%;
+padding: 10px;
+background: #1a1a1a;
+color: #fff;
+border: none;
+border-radius: 8px;
+font-size: 0.88rem;
+font-weight: 600;
+cursor: pointer;
+transition: background 0.15s;
+}
+.reveal-btn:hover { background: #333; }
+.answer-box {
+display: none;
+margin-top: 10px;
+padding: 12px 16px;
+background: #f0ede8;
+border-radius: 8px;
+font-size: 0.9rem;
+font-weight: 600;
+color: #1a1a1a;
+}
+.answer-box.visible { display: block; }
 
-  /* アーカイブ */
-  .archive-section h2 {
-    font-size: 0.78rem;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: #999;
-    margin-bottom: 0.8rem;
-  }
-  .archive-list { display: flex; flex-direction: column; gap: 6px; }
-  .archive-item {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 10px 14px;
-    background: #fff;
-    border: 1px solid #e8e6e1;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: border-color 0.15s, background 0.15s;
-    text-align: left;
-    width: 100%;
-  }
-  .archive-item:hover { border-color: #aaa; background: #faf9f7; }
-  .archive-item.active { border-color: #1a1a1a; background: #1a1a1a; }
-  .archive-item.active .arc-date,
-  .archive-item.active .arc-topic { color: #fff; }
-  .archive-item.active .arc-tags .tag { background: #333; color: #ccc; }
-  .arc-date  { font-size: 0.8rem; font-weight: 600; color: #1a1a1a; min-width: 90px; }
-  .arc-topic { font-size: 0.82rem; color: #555; flex: 1; }
-  .arc-tags  { display: flex; gap: 4px; flex-wrap: wrap; }
+/* アーカイブ */
+.archive-section h2 {
+font-size: 0.78rem;
+font-weight: 600;
+letter-spacing: 0.08em;
+text-transform: uppercase;
+color: #999;
+margin-bottom: 0.8rem;
+}
+.archive-list { display: flex; flex-direction: column; gap: 6px; }
+.archive-item {
+display: flex;
+align-items: center;
+gap: 10px;
+padding: 10px 14px;
+background: #fff;
+border: 1px solid #e8e6e1;
+border-radius: 10px;
+cursor: pointer;
+transition: border-color 0.15s, background 0.15s;
+text-align: left;
+width: 100%;
+}
+.archive-item:hover { border-color: #aaa; background: #faf9f7; }
+.archive-item.active { border-color: #1a1a1a; background: #1a1a1a; }
+.archive-item.active .arc-date,
+.archive-item.active .arc-topic { color: #fff; }
+.archive-item.active .arc-tags .tag { background: #333; color: #ccc; }
+.arc-date  { font-size: 0.8rem; font-weight: 600; color: #1a1a1a; min-width: 90px; }
+.arc-topic { font-size: 0.82rem; color: #555; flex: 1; }
+.arc-tags  { display: flex; gap: 4px; flex-wrap: wrap; }
 
-  /* ローディング */
-  .loading { text-align: center; color: #aaa; font-size: 0.9rem; padding: 2rem 0; }
-  .error   { text-align: center; color: #c0392b; font-size: 0.9rem; padding: 1rem 0; }
+/* ローディング */
+.loading { text-align: center; color: #aaa; font-size: 0.9rem; padding: 2rem 0; }
+.error   { text-align: center; color: #c0392b; font-size: 0.9rem; padding: 1rem 0; }
 
-  /* 学習タブ */
-  .study-section { margin-top: 1.4rem; border-top: 1px solid #e8e6e1; padding-top: 1.2rem; }
-  .tab-bar { display: flex; gap: 6px; margin-bottom: 1rem; flex-wrap: wrap; }
-  .tab-btn {
-    font-size: 0.78rem;
-    font-weight: 600;
-    padding: 5px 14px;
-    border-radius: 20px;
-    border: 1px solid #e8e6e1;
-    background: #fff;
-    color: #888;
-    cursor: pointer;
-    transition: all 0.15s;
-  }
-  .tab-btn:hover { border-color: #aaa; color: #444; }
-  .tab-btn.active { background: #1a1a1a; border-color: #1a1a1a; color: #fff; }
-  .tab-panel { display: none; }
-  .tab-panel.active { display: block; }
+/* 学習タブ */
+.study-section { margin-top: 1.4rem; border-top: 1px solid #e8e6e1; padding-top: 1.2rem; }
+.tab-bar { display: flex; gap: 6px; margin-bottom: 1rem; flex-wrap: wrap; }
+.tab-btn {
+font-size: 0.78rem;
+font-weight: 600;
+padding: 5px 14px;
+border-radius: 20px;
+border: 1px solid #e8e6e1;
+background: #fff;
+color: #888;
+cursor: pointer;
+transition: all 0.15s;
+}
+.tab-btn:hover { border-color: #aaa; color: #444; }
+.tab-btn.active { background: #1a1a1a; border-color: #1a1a1a; color: #fff; }
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
 
-  /* 解説 */
-  .explanation-summary {
-    font-size: 0.88rem; color: #444; line-height: 1.7;
-    background: #f7f6f3; border-radius: 8px; padding: 12px 14px;
-    margin-bottom: 1rem;
-  }
-  .explanation-block { margin-bottom: 1rem; }
-  .explanation-block h4 {
-    font-size: 0.75rem; font-weight: 600; letter-spacing: 0.06em;
-    text-transform: uppercase; color: #999; margin-bottom: 6px;
-  }
-  .explanation-block p { font-size: 0.88rem; color: #333; line-height: 1.7; }
-  .choice-row {
-    display: flex; gap: 8px; align-items: flex-start;
-    padding: 8px 0; border-bottom: 1px solid #f0ede8;
-    font-size: 0.86rem;
-  }
-  .choice-row:last-child { border-bottom: none; }
-  .choice-badge {
-    font-size: 0.72rem; font-weight: 700; min-width: 22px; height: 22px;
-    border-radius: 50%; display: flex; align-items: center; justify-content: center;
-    flex-shrink: 0; margin-top: 1px;
-  }
-  .choice-badge.correct { background: #e8f5e9; color: #2e7d32; }
-  .choice-badge.wrong   { background: #f0ede8; color: #888; }
-  .choice-reason { color: #444; line-height: 1.6; }
+/* 解説 */
+.explanation-summary {
+font-size: 0.88rem; color: #444; line-height: 1.7;
+background: #f7f6f3; border-radius: 8px; padding: 12px 14px;
+margin-bottom: 1rem;
+}
+.explanation-block { margin-bottom: 1rem; }
+.explanation-block h4 {
+font-size: 0.75rem; font-weight: 600; letter-spacing: 0.06em;
+text-transform: uppercase; color: #999; margin-bottom: 6px;
+}
+.explanation-block p { font-size: 0.88rem; color: #333; line-height: 1.7; }
+.choice-row {
+display: flex; gap: 8px; align-items: flex-start;
+padding: 8px 0; border-bottom: 1px solid #f0ede8;
+font-size: 0.86rem;
+}
+.choice-row:last-child { border-bottom: none; }
+.choice-badge {
+font-size: 0.72rem; font-weight: 700; min-width: 22px; height: 22px;
+border-radius: 50%; display: flex; align-items: center; justify-content: center;
+flex-shrink: 0; margin-top: 1px;
+}
+.choice-badge.correct { background: #e8f5e9; color: #2e7d32; }
+.choice-badge.wrong   { background: #f0ede8; color: #888; }
+.choice-reason { color: #444; line-height: 1.6; }
 
-  /* 単語 */
-  .vocab-list { display: flex; flex-direction: column; gap: 8px; }
-  .vocab-item {
-    padding: 10px 14px; background: #f7f6f3;
-    border-radius: 8px; border-left: 3px solid #1a1a1a;
-  }
-  .vocab-word { font-size: 0.95rem; font-weight: 600; color: #1a1a1a; }
-  .vocab-reading { font-size: 0.75rem; color: #888; margin-left: 6px; }
-  .vocab-meaning { font-size: 0.82rem; color: #555; margin-top: 2px; }
-  .vocab-example { font-size: 0.82rem; color: #888; margin-top: 3px; font-style: italic; }
+/* 単語 */
+.vocab-list { display: flex; flex-direction: column; gap: 8px; }
+.vocab-item {
+padding: 10px 14px; background: #f7f6f3;
+border-radius: 8px; border-left: 3px solid #1a1a1a;
+}
+.vocab-word { font-size: 0.95rem; font-weight: 600; color: #1a1a1a; }
+.vocab-reading { font-size: 0.75rem; color: #888; margin-left: 6px; }
+.vocab-meaning { font-size: 0.82rem; color: #555; margin-top: 2px; }
+.vocab-example { font-size: 0.82rem; color: #888; margin-top: 3px; font-style: italic; }
 
-  /* ディクテーション */
-  .dictation-list { display: flex; flex-direction: column; gap: 10px; }
-  .dictation-item { padding: 10px 14px; background: #f7f6f3; border-radius: 8px; }
-  .dictation-blanked {
-    font-size: 0.9rem; color: #1a1a1a; line-height: 1.7; margin-bottom: 6px;
-  }
-  .blank { display: inline-block; min-width: 60px; border-bottom: 2px solid #1a1a1a;
-           background: transparent; color: transparent; cursor: pointer; }
-  .blank.revealed { color: #1a56c4; background: #e8f0fe; border-radius: 3px;
-                    padding: 0 4px; border-bottom: none; }
-  .dictation-hint {
-    font-size: 0.75rem; color: #aaa; margin-top: 2px;
-  }
-  .reveal-all-btn {
-    margin-top: 10px; font-size: 0.78rem; font-weight: 600;
-    padding: 5px 14px; border-radius: 20px; border: 1px solid #e8e6e1;
-    background: #fff; color: #555; cursor: pointer;
-  }
-  .reveal-all-btn:hover { background: #f0ede8; }
+/* ディクテーション */
+.dictation-list { display: flex; flex-direction: column; gap: 10px; }
+.dictation-item { padding: 10px 14px; background: #f7f6f3; border-radius: 8px; }
+.dictation-blanked {
+font-size: 0.9rem; color: #1a1a1a; line-height: 1.7; margin-bottom: 6px;
+}
+.blank { display: inline-block; min-width: 60px; border-bottom: 2px solid #1a1a1a;
+background: transparent; color: transparent; cursor: pointer; }
+.blank.revealed { color: #1a56c4; background: #e8f0fe; border-radius: 3px;
+padding: 0 4px; border-bottom: none; }
+.dictation-hint {
+font-size: 0.75rem; color: #aaa; margin-top: 2px;
+}
+.reveal-all-btn {
+margin-top: 10px; font-size: 0.78rem; font-weight: 600;
+padding: 5px 14px; border-radius: 20px; border: 1px solid #e8e6e1;
+background: #fff; color: #555; cursor: pointer;
+}
+.reveal-all-btn:hover { background: #f0ede8; }
 </style>
+
 </head>
 <body>
 <div class="wrap">
 
   <header class="site-header">
     <h1>Daily English Listening Quiz</h1>
-    <p>毎日自動生成・更新</p>
+    <p>毎週月曜日、水曜日、金曜日に自動生成・更新</p>
   </header>
 
   <div id="quiz-card" class="card">
@@ -299,17 +301,23 @@
         <div class="answer-box" id="answer-box"></div>
       </div>
 
-      <div class="study-section" id="study-section" style="display:none">
-        <div class="tab-bar">
-          <button class="tab-btn active" onclick="switchTab('explanation')">解説</button>
-          <button class="tab-btn" onclick="switchTab('vocabulary')">単語・フレーズ</button>
-          <button class="tab-btn" onclick="switchTab('dictation')">ディクテーション</button>
-        </div>
-        <div class="tab-panel active" id="tab-explanation"></div>
-        <div class="tab-panel" id="tab-vocabulary"></div>
-        <div class="tab-panel" id="tab-dictation"></div>
-      </div>
+```
+  <div id="study-toggle-wrap" style="display:none; margin-top:1rem;">
+    <button class="script-toggle-btn" onclick="toggleStudy()">解説・単語・ディクテーションを見る</button>
+  </div>
+  <div class="study-section" id="study-section" style="display:none">
+    <div class="tab-bar">
+      <button class="tab-btn active" onclick="switchTab('explanation')">解説</button>
+      <button class="tab-btn" onclick="switchTab('vocabulary')">単語・フレーズ</button>
+      <button class="tab-btn" onclick="switchTab('dictation')">ディクテーション</button>
     </div>
+    <div class="tab-panel active" id="tab-explanation"></div>
+    <div class="tab-panel" id="tab-vocabulary"></div>
+    <div class="tab-panel" id="tab-dictation"></div>
+  </div>
+</div>
+```
+
   </div>
 
   <div class="card archive-section">
@@ -331,6 +339,10 @@ async function fetchJSON(url) {
   const res = await fetch(url + "?_=" + Date.now());
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   return res.json();
+}
+
+function sanitize(str) {
+  return (str || "").replace(/```/g, "").trim();
 }
 
 function labelClass(label) {
@@ -361,15 +373,16 @@ function renderQuiz(data) {
   sl.innerHTML = data.lines.map(l => `
     <div class="line">
       <span class="line-label ${labelClass(l.label)}">${labelText(l.label)}</span>
-      <span class="line-text">${l.text}</span>
+      <span class="line-text">${sanitize(l.text)}</span>
     </div>
   `).join("");
 
-  document.getElementById("answer-box").textContent = data.answer;
+  document.getElementById("answer-box").textContent = sanitize(data.answer);
   document.getElementById("answer-box").classList.remove("visible");
   document.getElementById("script-lines").classList.remove("visible");
   document.querySelector(".script-toggle-btn").textContent = "スクリプトを見る";
   document.getElementById("study-section").style.display = "none";
+  document.getElementById("study-toggle-wrap").style.display = "none";
   switchTab("explanation");
 
   if (data.study && Object.keys(data.study).length > 0) {
@@ -391,7 +404,7 @@ function switchTab(name) {
 
 function renderStudy(study, answer) {
   if (!study || Object.keys(study).length === 0) return;
-  document.getElementById("study-section").style.display = "block";
+  document.getElementById("study-toggle-wrap").style.display = "block";
 
   // 正解の選択肢ラベルを取得（"The correct answer is B. ..." → "B"）
   const correctLetter = answer.match(/is\s+([A-D])/i)?.[1] || "";
@@ -473,6 +486,18 @@ function revealAllBlanks() {
   });
 }
 
+function toggleStudy() {
+  const section = document.getElementById("study-section");
+  const btn = document.querySelector("#study-toggle-wrap .script-toggle-btn");
+  if (section.style.display === "none") {
+    section.style.display = "block";
+    btn.textContent = "解説・単語・ディクテーションを隠す";
+  } else {
+    section.style.display = "none";
+    btn.textContent = "解説・単語・ディクテーションを見る";
+  }
+}
+
 function toggleScript() {
   const lines = document.getElementById("script-lines");
   const btn = document.querySelector(".script-toggle-btn");
@@ -547,5 +572,6 @@ async function init() {
 
 init();
 </script>
+
 </body>
 </html>

@@ -20,7 +20,7 @@ if not API_KEY:
     raise ValueError("ELEVENLABS_API_KEY が設定されていません。.env ファイルを確認してください。")
 
 SCRIPT_FILE = "script.txt"
-OUTPUT_FILE = "listening_quiz.mp3"
+OUTPUT_FILE = os.environ.get("OUTPUT_FILE", "listening_quiz.mp3")
 WORK_DIR = Path("audio_parts")
 WORK_DIR.mkdir(exist_ok=True)
 
