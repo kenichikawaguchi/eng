@@ -132,33 +132,6 @@ margin-top: 2px;
 
 .line-text { font-size: 0.92rem; color: #1a1a1a; padding-top: 3px; }
 
-/* 正解エリア */
-.answer-section { margin-top: 1.2rem; }
-.reveal-btn {
-width: 100%;
-padding: 10px;
-background: #1a1a1a;
-color: #fff;
-border: none;
-border-radius: 8px;
-font-size: 0.88rem;
-font-weight: 600;
-cursor: pointer;
-transition: background 0.15s;
-}
-.reveal-btn:hover { background: #333; }
-.answer-box {
-display: none;
-margin-top: 10px;
-padding: 12px 16px;
-background: #f0ede8;
-border-radius: 8px;
-font-size: 0.9rem;
-font-weight: 600;
-color: #1a1a1a;
-}
-.answer-box.visible { display: block; }
-
 /* アーカイブ */
 .archive-section h2 {
 font-size: 0.78rem;
@@ -191,9 +164,120 @@ width: 100%;
 .arc-topic { font-size: 0.82rem; color: #555; flex: 1; }
 .arc-tags  { display: flex; gap: 4px; flex-wrap: wrap; }
 
-/* ローディング */
-.loading { text-align: center; color: #aaa; font-size: 0.9rem; padding: 2rem 0; }
-.error   { text-align: center; color: #c0392b; font-size: 0.9rem; padding: 1rem 0; }
+/* 統計バー */
+.stats-bar {
+display: flex;
+gap: 8px;
+justify-content: center;
+margin-bottom: 1.5rem;
+flex-wrap: wrap;
+}
+.stat-card {
+background: #fff;
+border: 1px solid #e8e6e1;
+border-radius: 10px;
+padding: 10px 18px;
+text-align: center;
+min-width: 90px;
+}
+.stat-value {
+font-size: 1.4rem;
+font-weight: 700;
+color: #1a1a1a;
+line-height: 1.2;
+}
+.stat-label {
+font-size: 0.72rem;
+color: #999;
+margin-top: 2px;
+}
+.stat-card.streak .stat-value { color: #c45a1a; }
+
+/* 選択肢ボタン */
+.choices-section { margin-top: 1.2rem; }
+.choices-section h3 {
+font-size: 0.78rem; font-weight: 600; letter-spacing: 0.08em;
+text-transform: uppercase; color: #999; margin-bottom: 0.8rem;
+}
+.choice-buttons { display: flex; flex-direction: column; gap: 8px; }
+.choice-btn {
+display: flex; align-items: center; gap: 12px;
+width: 100%; padding: 12px 14px;
+background: #fff; border: 1px solid #e8e6e1;
+border-radius: 10px; cursor: pointer;
+font-size: 0.88rem; text-align: left;
+transition: border-color 0.15s, background 0.15s;
+}
+.choice-btn:hover:not(:disabled) { border-color: #aaa; background: #faf9f7; }
+.choice-btn:disabled { cursor: default; }
+.choice-btn .choice-letter {
+font-size: 0.75rem; font-weight: 700;
+min-width: 24px; height: 24px; border-radius: 50%;
+background: #f0ede8; color: #555;
+display: flex; align-items: center; justify-content: center;
+flex-shrink: 0; transition: background 0.15s, color 0.15s;
+}
+.choice-btn .choice-text { color: #1a1a1a; line-height: 1.5; }
+/* 選択中（未確定） */
+.choice-btn.pending {
+border-color: #1a1a1a; background: #f7f6f3;
+}
+.choice-btn.pending .choice-letter {
+background: #1a1a1a; color: #fff;
+}
+/* 確定後：正解 */
+.choice-btn.selected-correct {
+border-color: #2e7d32; background: #e8f5e9;
+}
+.choice-btn.selected-correct .choice-letter {
+background: #2e7d32; color: #fff;
+}
+/* 確定後：不正解 */
+.choice-btn.selected-wrong {
+border-color: #c45a1a; background: #fce8d5;
+}
+.choice-btn.selected-wrong .choice-letter {
+background: #c45a1a; color: #fff;
+}
+/* 確定後：正解ハイライト */
+.choice-btn.reveal-correct {
+border-color: #2e7d32; background: #e8f5e9;
+}
+.choice-btn.reveal-correct .choice-letter {
+background: #2e7d32; color: #fff;
+}
+/* 決定ボタン */
+.confirm-btn {
+width: 100%; margin-top: 10px; padding: 11px;
+background: #1a1a1a; color: #fff;
+border: none; border-radius: 8px;
+font-size: 0.88rem; font-weight: 600;
+cursor: pointer; transition: background 0.15s;
+display: none;
+}
+.confirm-btn:hover { background: #333; }
+.confirm-btn.visible { display: block; }
+.answer-reveal {
+display: none; margin-top: 10px; padding: 12px 16px;
+background: #f0ede8; border-radius: 8px;
+font-size: 0.9rem; font-weight: 600; color: #1a1a1a;
+}
+.answer-reveal.visible { display: block; }
+
+/* アーカイブの結果バッジ */
+.arc-result {
+font-size: 0.78rem;
+font-weight: 700;
+width: 22px;
+height: 22px;
+border-radius: 50%;
+display: flex;
+align-items: center;
+justify-content: center;
+flex-shrink: 0;
+}
+.arc-result.correct { background: #e8f5e9; color: #2e7d32; }
+.arc-result.wrong   { background: #fce8d5; color: #c45a1a; }
 
 /* 学習タブ */
 .study-section { margin-top: 1.4rem; border-top: 1px solid #e8e6e1; padding-top: 1.2rem; }
@@ -279,8 +363,23 @@ background: #fff; color: #555; cursor: pointer;
 
   <header class="site-header">
     <h1>Daily English Listening Quiz</h1>
-    <p>毎週月曜日、水曜日、金曜日に自動生成・更新</p>
+    <p>毎日自動生成・更新</p>
   </header>
+
+  <div class="stats-bar" id="stats-bar">
+    <div class="stat-card streak">
+      <div class="stat-value" id="stat-streak">0</div>
+      <div class="stat-label">連続学習日</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value" id="stat-total">0</div>
+      <div class="stat-label">解答数</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value" id="stat-accuracy">-%</div>
+      <div class="stat-label">正答率</div>
+    </div>
+  </div>
 
   <div id="quiz-card" class="card">
     <div class="loading" id="loading-main">読み込み中...</div>
@@ -296,9 +395,11 @@ background: #fff; color: #555; cursor: pointer;
         </div>
         <div class="script-lines" id="script-lines"></div>
       </div>
-      <div class="answer-section">
-        <button class="reveal-btn" onclick="toggleAnswer()">正解を見る</button>
-        <div class="answer-box" id="answer-box"></div>
+      <div class="choices-section">
+        <h3>Answer</h3>
+        <div class="choice-buttons" id="choice-buttons"></div>
+        <button class="confirm-btn" id="confirm-btn" onclick="confirmChoice()">決定</button>
+        <div class="answer-reveal" id="answer-reveal"></div>
       </div>
 
 ```
@@ -341,6 +442,126 @@ async function fetchJSON(url) {
   return res.json();
 }
 
+// ── localStorage 管理 ────────────────────────────────────────────────────────
+const STORAGE_KEY = "eng_quiz_stats";
+
+function loadStats() {
+  try {
+    return JSON.parse(localStorage.getItem(STORAGE_KEY)) || { results: {}, lastVisit: "", streak: 0 };
+  } catch { return { results: {}, lastVisit: "", streak: 0 }; }
+}
+
+function saveStats(stats) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(stats));
+}
+
+function updateStreak(stats) {
+  const today = new Date().toISOString().slice(0, 10).replace(/-/g, "");
+  const last  = stats.lastVisit || "";
+  if (last === today) return stats;
+  // 前日かどうか判定（簡易）
+  const yesterday = new Date(Date.now() - 86400000).toISOString().slice(0, 10).replace(/-/g, "");
+  stats.streak = (last === yesterday) ? (stats.streak || 0) + 1 : 1;
+  stats.lastVisit = today;
+  saveStats(stats);
+  return stats;
+}
+
+function renderStats() {
+  let stats = loadStats();
+  stats = updateStreak(stats);
+  const results = Object.values(stats.results);
+  const total   = results.length;
+  const correct = results.filter(r => r === "correct").length;
+  document.getElementById("stat-streak").textContent   = stats.streak;
+  document.getElementById("stat-total").textContent    = total;
+  document.getElementById("stat-accuracy").textContent = total > 0 ? Math.round(correct / total * 100) + "%" : "-%";
+}
+
+function recordResult(isCorrect) {
+  if (!currentDate) return;
+  const stats = loadStats();
+  stats.results[currentDate] = isCorrect ? "correct" : "wrong";
+  saveStats(stats);
+  renderStats();
+  updateArchiveBadge(currentDate, isCorrect ? "correct" : "wrong");
+}
+
+let pendingLetter = null;
+
+function selectChoice(letter) {
+  pendingLetter = letter;
+  // 全ボタンの pending を外してから選択したものだけに付ける
+  document.querySelectorAll(".choice-btn").forEach(b => b.classList.remove("pending"));
+  const selected = document.querySelector(`.choice-btn[data-letter="${letter}"]`);
+  if (selected) selected.classList.add("pending");
+  // 決定ボタンを表示
+  document.getElementById("confirm-btn").classList.add("visible");
+}
+
+function confirmChoice() {
+  if (!pendingLetter) return;
+  const ar = document.getElementById("answer-reveal");
+  const correctLetter = ar.dataset.correct || "";
+
+  // 全ボタンを無効化・判定結果をハイライト
+  document.querySelectorAll(".choice-btn").forEach(b => {
+    b.disabled = true;
+    b.classList.remove("pending");
+    if (b.dataset.letter === correctLetter) b.classList.add("reveal-correct");
+  });
+  const selected = document.querySelector(`.choice-btn[data-letter="${pendingLetter}"]`);
+  if (selected) {
+    selected.classList.add(pendingLetter === correctLetter ? "selected-correct" : "selected-wrong");
+  }
+
+  // 決定ボタンを隠す・正解テキストを表示
+  document.getElementById("confirm-btn").classList.remove("visible");
+  ar.classList.add("visible");
+
+  // 記録
+  recordResult(pendingLetter === correctLetter);
+  pendingLetter = null;
+}
+
+function updateArchiveBadge(dateStr, resultClass) {
+  const item = document.querySelector(`.archive-item[data-date="${dateStr}"]`);
+  if (!item) return;
+  let badge = item.querySelector(".arc-result");
+  if (!resultClass) {
+    if (badge) badge.remove();
+    return;
+  }
+  if (!badge) {
+    badge = document.createElement("span");
+    badge.className = "arc-result";
+    item.appendChild(badge);
+  }
+  badge.className = `arc-result ${resultClass}`;
+  badge.textContent = resultClass === "correct" ? "○" : "✕";
+}
+
+function restoreArchiveBadges() {
+  const stats = loadStats();
+  Object.entries(stats.results).forEach(([date, result]) => {
+    updateArchiveBadge(date, result);
+  });
+}
+
+function restoreChoiceState() {
+  if (!currentDate) return;
+  const stats = loadStats();
+  const result = stats.results[currentDate];
+  if (!result) return;
+  const ar = document.getElementById("answer-reveal");
+  const correctLetter = ar.dataset.correct || "";
+  document.querySelectorAll(".choice-btn").forEach(b => {
+    b.disabled = true;
+    if (b.dataset.letter === correctLetter) b.classList.add("reveal-correct");
+  });
+  ar.classList.add("visible");
+}
+
 function sanitize(str) {
   return (str || "").replace(/```/g, "").trim();
 }
@@ -369,16 +590,43 @@ function renderQuiz(data) {
 
   document.getElementById("audio-player").src = data.mp3_url;
 
+  // スクリプト（CHOICE 行は除いて表示）
   const sl = document.getElementById("script-lines");
-  sl.innerHTML = data.lines.map(l => `
-    <div class="line">
-      <span class="line-label ${labelClass(l.label)}">${labelText(l.label)}</span>
-      <span class="line-text">${sanitize(l.text)}</span>
-    </div>
-  `).join("");
+  sl.innerHTML = data.lines
+    .filter(l => l.label !== "CHOICE")
+    .map(l => `
+      <div class="line">
+        <span class="line-label ${labelClass(l.label)}">${labelText(l.label)}</span>
+        <span class="line-text">${sanitize(l.text)}</span>
+      </div>
+    `).join("");
 
-  document.getElementById("answer-box").textContent = sanitize(data.answer);
-  document.getElementById("answer-box").classList.remove("visible");
+  // 正解ラベルを取得（"The correct answer is B. ..." → "B"）
+  const correctLetter = sanitize(data.answer).match(/is\s+([A-D])/i)?.[1] || "";
+
+  // 選択肢ボタンを生成
+  const letters = ["A", "B", "C", "D"];
+  const cb = document.getElementById("choice-buttons");
+  cb.innerHTML = data.choices.map((text, i) => {
+    const letter = letters[i] || String.fromCharCode(65 + i);
+    const cleanText = sanitize(text).replace(/^[A-D]\.\s*/, "");
+    return `
+      <button class="choice-btn" data-letter="${letter}"
+              onclick="selectChoice('${letter}')">
+        <span class="choice-letter">${letter}</span>
+        <span class="choice-text">${cleanText}</span>
+      </button>`;
+  }).join("");
+
+  // 正解テキストを answer-reveal にセット（data-correct も付与）
+  const ar = document.getElementById("answer-reveal");
+  ar.textContent = sanitize(data.answer);
+  ar.dataset.correct = correctLetter;
+  ar.classList.remove("visible");
+
+  pendingLetter = null;
+  document.getElementById("confirm-btn").classList.remove("visible");
+  // スクリプトトグルをリセット
   document.getElementById("script-lines").classList.remove("visible");
   document.querySelector(".script-toggle-btn").textContent = "スクリプトを見る";
   document.getElementById("study-section").style.display = "none";
@@ -388,6 +636,9 @@ function renderQuiz(data) {
   if (data.study && Object.keys(data.study).length > 0) {
     renderStudy(data.study, data.answer);
   }
+
+  // 回答済みなら復元
+  restoreChoiceState();
 
   document.getElementById("loading-main").style.display = "none";
   document.getElementById("quiz-content").style.display = "block";
@@ -510,19 +761,14 @@ function toggleScript() {
   }
 }
 
-function toggleAnswer() {
-  const box = document.getElementById("answer-box");
-  const btn = document.querySelector(".reveal-btn");
-  if (box.classList.contains("visible")) {
-    box.classList.remove("visible");
-    btn.textContent = "正解を見る";
-  } else {
-    box.classList.add("visible");
-    btn.textContent = "正解を隠す";
-  }
-}
-
 async function loadQuizByJsonUrl(jsonUrl, dateStr) {
+  // その日の回答記録をクリア
+  const stats = loadStats();
+  delete stats.results[dateStr];
+  saveStats(stats);
+  renderStats();
+  updateArchiveBadge(dateStr, null);
+
   document.getElementById("loading-main").style.display = "block";
   document.getElementById("quiz-content").style.display = "none";
   document.querySelectorAll(".archive-item").forEach(el => {
@@ -537,6 +783,7 @@ async function loadQuizByJsonUrl(jsonUrl, dateStr) {
 }
 
 async function init() {
+  renderStats();
   let index;
   try {
     index = await fetchJSON(INDEX_URL);
@@ -568,6 +815,7 @@ async function init() {
   if (index.length > 0) {
     await loadQuizByJsonUrl(index[0].json_url, index[0].date);
   }
+  restoreArchiveBadges();
 }
 
 init();
