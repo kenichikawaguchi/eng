@@ -164,6 +164,21 @@ width: 100%;
 .arc-topic { font-size: 0.82rem; color: #555; flex: 1; }
 .arc-tags  { display: flex; gap: 4px; flex-wrap: wrap; }
 
+/* 今日の問題なしバナー */
+.no-quiz-banner {
+display: none;
+background: #f7f6f3;
+border: 1px solid #e8e6e1;
+border-radius: 10px;
+padding: 14px 16px;
+margin-bottom: 10px;
+font-size: 0.88rem;
+color: #555;
+line-height: 1.6;
+}
+.no-quiz-banner.visible { display: block; }
+.no-quiz-banner strong { color: #1a1a1a; font-weight: 600; }
+
 /* 統計バー */
 .stats-bar {
 display: flex;
@@ -381,6 +396,7 @@ background: #fff; color: #555; cursor: pointer;
     </div>
   </div>
 
+  <div class="no-quiz-banner" id="no-quiz-banner"></div>
   <div id="quiz-card" class="card">
     <div class="loading" id="loading-main">読み込み中...</div>
     <div id="quiz-content" style="display:none">
@@ -782,6 +798,16 @@ async function loadQuizByJsonUrl(jsonUrl, dateStr) {
   }
 }
 
+function todayStr() {
+  // JST での今日の日付文字列（YYYYMMDD）
+  const now = new Date(Date.now() + 9 * 60 * 60 * 1000);
+  return now.toISOString().slice(0, 10).replace(/-/g, "");
+}
+
+function nextQuizDate() {
+  return "明日";
+}
+
 async function init() {
   renderStats();
   let index;
@@ -791,6 +817,16 @@ async function init() {
     document.getElementById("loading-main").textContent = "データの取得に失敗しました";
     document.getElementById("archive-list").innerHTML = '<div class="error">取得失敗</div>';
     return;
+  }
+
+  // 今日の問題があるか確認
+  const today = todayStr();
+  const hasToday = index.length > 0 && index[0].date === today;
+  const banner = document.getElementById("no-quiz-banner");
+  if (!hasToday && index.length > 0) {
+    const next = nextQuizDate();
+    banner.innerHTML = `本日（...）の新しい問題はまだ公開されていません。<br><strong>明日</strong>また確認してみてください。過去の問題はアーカイブからどうぞ。`;
+    banner.classList.add("visible");
   }
 
   // アーカイブ一覧を描画

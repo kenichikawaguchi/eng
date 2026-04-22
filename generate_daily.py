@@ -3,7 +3,7 @@
 毎日自動実行スクリプト
   1. パラメータをランダム選択（難易度・ジャンル・話者の関係・トピック）
   2. Gemini API でリスニングスクリプト生成
-  3. ElevenLabs で MP3 生成
+  3. Kokoro で MP3 生成
   4. OCI Object Storage にアップロード
      - listening/listening_quiz_YYYYMMDD.mp3
      - listening/listening_quiz_YYYYMMDD.json  ← 追加
@@ -249,9 +249,9 @@ def generate_study_content(script_text: str) -> dict:
     return study
 
 def generate_mp3(output_path: Path) -> None:
-    log.info("ElevenLabs で MP3 生成開始")
+    log.info("Kokoro で MP3 生成開始")
     result = subprocess.run(
-        [sys.executable, str(BASE_DIR / "make_listening_elevenlabs.py")],
+        [sys.executable, str(BASE_DIR / "make_listening_kokoro.py")],
         cwd=BASE_DIR,
         capture_output=True,
         text=True,
